@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Modelos</h1>
+    <section>
+      <h2>Produtos:</h2>
+      <ul>
+        {% for produto in produtos %}
+        <li><a href="{% url 'detalhe-produto' produto.id %}">
+            {{ produto.nome }}
+            {% comment %} ({{ produto.codigo }}) - R$ {{ produto.preco }}<br />
+            Fornecedor: {{ produto.fornecedor.nome }}<br />
+            Categorias: {% for categoria in produto.categoria.all %} {{
+            categoria.nome }}{% if not forloop.last %}, {% endif %} {% endfor %} {% endcomment %}
+        </a>
+        </li>
+        {% empty %}
+        <li>Não há produtos cadastrados</li>
+        {% endfor %}
+      </ul>
+    </section>
+    <section>
+      <h2>Categorias:</h2>
+      <ul>
+        {% for categoria in categorias %}
+        <li>{{ categoria.nome }}</li>
+        {% empty %}
+        <li>Não há categorias registradas</li>
+        {% endfor %}
+      </ul>
+    </section>
+    <section>
+      <h2>Fornecedores:</h2>
+      <ul>
+        {% for fornecedor in fornecedores %}
+        <li>
+          {{fornecedor.nome}} - CNPJ: {{fornecedor.cnpj}} - Endereço:
+          {{fornecedor.endereco}}
+        </li>
+        {% empty %}
+        <li>Não há fornecedores registrados</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </body>
+</html>
