@@ -8,21 +8,65 @@
   <body>
     <h1>Modelos</h1>
     <section>
+      <form method="get" action="">
+        <h3>Filtros:</h3>
+
+        <label for="nome">Buscar por nome:</label>
+        <input
+          type="text"
+          name="nome"
+          id="nome"
+          value="{{ request.GET.nome }}"
+        />
+
+        <label for="preco_min">Preço Mínimo:</label>
+        <input
+          type="number"
+          name="preco_min"
+          id="preco_min"
+          value="{{ request.GET.preco_min }}"
+        />
+
+        <label for="preco_max">Preço Máximo:</label>
+        <input
+          type="number"
+          name="preco_max"
+          id="preco_max"
+          value="{{ request.GET.preco_max }}"
+        />
+
+        <button type="submit">Filtrar</button>
+      </form>
       <h2>Produtos:</h2>
       <ul>
         {% for produto in produtos %}
-        <li><a href="{% url 'detalhe-produto' produto.id %}">
-            {{ produto.nome }}
-            {% comment %} ({{ produto.codigo }}) - R$ {{ produto.preco }}<br />
-            Fornecedor: {{ produto.fornecedor.nome }}<br />
+        <li>
+          <a href="{% url 'detalhe-produto' produto.id %}">
+            {{ produto.nome }} ({{ produto.codigo }}) - R$ {{ produto.preco }}<br />
+            {% comment %} Fornecedor: {{ produto.fornecedor.nome }}<br />
             Categorias: {% for categoria in produto.categoria.all %} {{
-            categoria.nome }}{% if not forloop.last %}, {% endif %} {% endfor %} {% endcomment %}
-        </a>
+            categoria.nome }}{% if not forloop.last %}, {% endif %} {% endfor %}
+            {% endcomment %}
+          </a>
         </li>
         {% empty %}
         <li>Não há produtos cadastrados</li>
         {% endfor %}
       </ul>
+
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; primeira</a>
+        <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+        {% endif %}
+        <span>
+          Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+        {% endif %}
+      </div>
     </section>
     <section>
       <h2>Categorias:</h2>
@@ -54,7 +98,7 @@
         <li><a href="cadastrar-produto">produto</a></li>
         <li><a href="cadastrar-fornecedor">fornecedor</a></li>
         <li><a href="cadastrar-categoria">categoria</a></li>
-    </ul>
+      </ul>
     </section>
   </body>
 </html>
