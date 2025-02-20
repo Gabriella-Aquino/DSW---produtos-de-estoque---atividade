@@ -23,6 +23,7 @@ class Produto(models.Model):
     data_criacao = models.DateTimeField(auto_now_add=True)
     fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE)
     categoria = models.ManyToManyField(Categoria)
+    imagem = models.ImageField('imagem do produto', default=None)
 
     def __str__(self):
         return f"{self.nome} ({self.codigo})"

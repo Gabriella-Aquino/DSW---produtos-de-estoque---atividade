@@ -42,6 +42,9 @@
         {% for produto in produtos %}
         <li>
           <a href="{% url 'detalhe-produto' produto.id %}">
+            {% if produto.imagem %}
+            <div><img src="{{ produto.imagem.url }}" alt="" width="200"></div>
+            {% endif %}
             {{ produto.nome }} ({{ produto.codigo }}) - R$ {{ produto.preco }}<br />
             {% comment %} Fornecedor: {{ produto.fornecedor.nome }}<br />
             Categorias: {% for categoria in produto.categoria.all %} {{

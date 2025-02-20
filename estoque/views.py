@@ -81,6 +81,9 @@ class ProdutoFormView(FormView):
     )
     produto.save()
     produto.categoria.set(form.cleaned_data['categorias'])
+    if form.cleaned_data["imagem"]:
+      produto.imagem = form.cleaned_data["imagem"]  # Salvar imagem
+      produto.save()
     return super().form_valid(form)
 
 # def produtoForm(request):

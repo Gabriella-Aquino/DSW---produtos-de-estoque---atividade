@@ -10,6 +10,7 @@ class ProdutoForm(forms.Form):
   quantidade_estoque = forms.IntegerField(label="Quantidade:")
   fornecedor = forms.ModelChoiceField(queryset=Fornecedor.objects.all())
   categorias = forms.ModelMultipleChoiceField(queryset=Categoria.objects.all())
+  imagem = forms.ImageField(label="Imagem do Produto", required=False)
 
   def clean_preco(self):
     preco = self.cleaned_data.get('preco')
